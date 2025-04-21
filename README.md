@@ -9,6 +9,5 @@ Projeto Proposto em aula na disciplina de Estrutura de Dados, jogo tem as seguin
 Tecnologias utilizadas:
  - JavaScript
  - Html
- - css
+ - Css
 
- 
