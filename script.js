@@ -2,7 +2,6 @@ let resultado = document.getElementById("resultado")
 let sectionPalpite = document.getElementById("sectionPalpite")
 let sectionInicio = document.getElementById("sectionInicio")
 let fim = document.getElementById("fim")
-
 //Função pra abrir e mostrar as seções de acordo com as etapas
 function mostrarOcultar(secao){
     if (secao.classList.contains("oculto")) {
@@ -10,19 +9,16 @@ function mostrarOcultar(secao){
     } else secao.classList.add("oculto")
 }
 mostrarOcultar(sectionInicio)
-
 // Função para gerar um número aleatório dentro de um intervalo definido
 function sortearNumero(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
-
 //Função pra pegar o palpite e ler pra comparar com o numero Sorteado
 function lerPalpite(){
     palpite = parseInt(document.getElementById("palpite").value)
     document.getElementById("palpite").value = ""
     return palpite
 }
-
 //Função pra definir os intervalor e tentativas
 document.getElementById('iniciar').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -49,6 +45,7 @@ document.getElementById('iniciar').addEventListener('submit', function(event) {
         mostrarOcultar(sectionInicio)
         mostrarOcultar(sectionPalpite)
         resultado.innerHTML = ""
+        console.log(numeroSecreto)
         //Função pra comparar os palpites com o numero secreto
         document.getElementById('formPalpite').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -59,14 +56,22 @@ document.getElementById('iniciar').addEventListener('submit', function(event) {
                 mostrarOcultar(sectionPalpite)
                 mostrarOcultar(fim)
                 return
+            //Verifica se o palpite é menor que o número secreto
             } else if (palpite < numeroSecreto) {
+                if (palpite < min){
+                    min
+                }
+                else min = palpite + 1
                 tentativas--
-                resultado.innerHTML = `Palpite: ${palpite} <br> Você errou!! O numero correto é maior!! <br> Tentativas restantes: ${tentativas} `
-                
-                
+                resultado.innerHTML = `Palpite: ${palpite} <br> Você errou!! O numero secreto está entre ${min} e ${max} !! <br> Tentativas restantes: ${tentativas} `
+            //Verifica se o palpite é maior que o numero secreto        
             } else {
+                if (palpite > max ){
+                    max
+                }
+                else max = palpite - 1
                 tentativas--
-                resultado.innerHTML = `Palpite: ${palpite} <br> Você errou!! O numero correto é menor!! <br> Tentativas restantes: ${tentativas} `
+                resultado.innerHTML = `Palpite: ${palpite} <br> Você errou!! O numero secreto está entre ${min} e ${max} !! <br> Tentativas restantes: ${tentativas} `
             }
             // Se o jogador não acertar dentro do número máximo de tentativas
             if (tentativas == 0){
@@ -77,14 +82,9 @@ document.getElementById('iniciar').addEventListener('submit', function(event) {
         })           
     }
 })
-
 function reiniciarJogo(){
     location.href = "index.html"
 }
-
 function encerrar(){
     window.close()
 }
-    
-
-
